@@ -1,9 +1,5 @@
 // import useContext
 import React, { useContext } from 'react';
-import { connect } from 'react-redux'
-import { createStructuredSelector } from 'reselect';
-
-import { selectCartItemsCount } from '../../redux/cart/cart.selectors';
 
 // commented caused by use cart provider pattern
 // import CartContext
@@ -16,21 +12,16 @@ import { ReactComponent as ShoppingIcon } from '../../assets/shopping-bag.svg';
 
 import './cart-icon.styles.scss';
 
-const CartIcon = ({ itemCount }) => {
-  // declare toggleHidden function value based on CartContext value
-  const { toggleHidden } = useContext(CartContext);
+const CartIcon = () => {
+  // declare toggleHidden function 
+  // and cartItemsCount value based on CartContext value
+  const { toggleHidden, cartItemsCount } = useContext(CartContext);
   return (
     <div className="cart-icon" onClick={toggleHidden}>
       <ShoppingIcon className="shopping-icon" />
-      <span className="item-count">{itemCount}</span>
+      <span className="item-count">{cartItemsCount}</span>
     </div>
   );
 };
 
-const mapStateToProps = createStructuredSelector({
-  itemCount: selectCartItemsCount
-});
-
-export default connect(
-  mapStateToProps
-)(CartIcon);
+export default CartIcon;
