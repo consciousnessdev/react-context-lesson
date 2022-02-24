@@ -7,7 +7,9 @@ import CartDropdown from '../cart-dropdown/cart-dropdown.component';
 
 // import context CurrentUserContext
 import CurrentUserContext from '../../contexts/current-user/current-user.context';
-import CartContext from '../../contexts/cart/cart.context';
+// dont use anymore changed use CartContext from cart provider
+// import CartContext from '../../contexts/cart/cart.context';
+import { CartContext } from '../../providers/cart/cart.provider';
 
 import { ReactComponent as Logo } from '../../assets/crown.svg';
 
@@ -17,10 +19,17 @@ const Header = () => {
   // declare currentUser value with useContext of CurrentUserContext value's
   const currentUser = useContext(CurrentUserContext);
 
+  /**
+   * This all commented caused by using cart provider pattern
+   * move to cart.provider.jsx file
+  */
   // this declared because need of create own toggle hidden
-  const [hidden, setHidden] = useState(true);
+  // const [hidden, setHidden] = useState(true);
   // then hidden state passing in to CartContext with consume of application
-  const toggleHidden = () => setHidden(!hidden);
+  // const toggleHidden = () => setHidden(!hidden);
+
+  // get hidden & toggle hidden from CartContext within cart provider file
+  const { hidden, toggleHidden } = useContext(CartContext);
 
   return (
     <div className="header">
@@ -48,14 +57,19 @@ const Header = () => {
           // override CartContext value's with 
           // local state hidden & local function toggleHidden
         */}
-        <CartContext.Provider
+        {/*
+          commented caused using cart provider pattern
+        */}
+        {/* <CartContext.Provider
           value={{
             hidden,
             toggleHidden,
           }}
         >
           <CartIcon />
-        </CartContext.Provider>
+        </CartContext.Provider> */}
+        
+        <CartIcon />
       </div>
       {hidden ? null : <CartDropdown />}
     </div>
