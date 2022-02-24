@@ -7,6 +7,8 @@ import { auth } from '../../firebase/firebase.utils';
 import CartIcon from '../cart-icon/cart-icon.component';
 import CartDropdown from '../cart-dropdown/cart-dropdown.component';
 import { selectCartHidden } from '../../redux/cart/cart.selectors';
+
+// import context CurrentUserContext
 import CurrentUserContext from '../../contexts/current-user/current-user.context';
 
 import { ReactComponent as Logo } from '../../assets/crown.svg';
@@ -14,6 +16,7 @@ import { ReactComponent as Logo } from '../../assets/crown.svg';
 import './header.styles.scss';
 
 const Header = ({ hidden }) => {
+  // declare currentUser value with useContext of CurrentUserContext value's
   const currentUser = useContext(CurrentUserContext);
   return (
     <div className="header">
@@ -27,6 +30,7 @@ const Header = ({ hidden }) => {
         <Link className="option" to="/shop">
           CONTACT
         </Link>
+        {/* Conditional rendering by currentUser value's */}
         {currentUser ? (
           <div className="option" onClick={() => auth.signOut()}>
             SIGN OUT
