@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
 
 import { auth } from '../../firebase/firebase.utils';
@@ -29,7 +29,10 @@ const Header = () => {
   // const toggleHidden = () => setHidden(!hidden);
 
   // get hidden & toggle hidden from CartContext within cart provider file
-  const { hidden, toggleHidden } = useContext(CartContext);
+  // const { hidden, toggleHidden } = useContext(CartContext);
+
+  // toggleHidden not used anymore caused by moved into CartIcon
+  const { hidden } = useContext(CartContext);
 
   return (
     <div className="header">

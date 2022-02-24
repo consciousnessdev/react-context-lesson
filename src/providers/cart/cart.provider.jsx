@@ -1,6 +1,12 @@
 import React, { createContext, useState, useEffect } from 'react';
 
-import { addItemToCart, removeItemFromCart } from '../../redux/cart/cart.utils';
+import {
+  addItemToCart,
+  removeItemFromCart,
+  filterItemFromCart,
+  getCartItemsCount,
+  getCartTotal,
+} from '../../redux/cart/cart.utils';
 
 // new CartContext use within cart provider pattern
 export const CartContext = createContext({
@@ -22,10 +28,27 @@ const CartProvider = ({ children }) => {
   // declare local state as value of both in cart CartContext
   const [cartItems, setCartItems] = useState([]);
   const [cartItemsCount, setCartItemsCount] = useState(0);
+  const [cartItemPriceTotal, setCartItemPriceTotal] = useState(0)
 
   // declare local function as value of CartContext functions
   // this declaration same as do in redux
   const addItem = (item) => setCartItems(addItemToCart(cartItems, item));
+
+  // adding removeItem function
+  const removeItem = (item) =>
+    setCartItems(removeItemFromCart(cartItems, item));
+
+  // adding clearItemFromCart
+  const clearItemFromCart = (item) =>
+    setCartItems(filterItemFromCart(cartItems, item));
+
+  // set useEffect for get latest item count
+  useEffect(() => {
+    // set cart item by get items count
+    setCartItemsCount(getCartItemsCount(cartItems));
+    setCartItemPriceTotal(getCartTotal(cartItems));
+  }, [cartItems])
+  
 
   return (
     <CartContext.Provider
@@ -35,6 +58,9 @@ const CartProvider = ({ children }) => {
         cartItems,
         cartItemsCount,
         addItem,
+        removeItem,
+        clearItemFromCart,
+        cartItemPriceTotal,
       }}
     >
       {children}
